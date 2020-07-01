@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1049483795312",
+    "firebase_url": "https://prm-project-eb33f.firebaseio.com",
+    "project_id": "prm-project-eb33f",
+    "storage_bucket": "prm-project-eb33f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049483795312:android:36e64636c67d1506f98db5",
+        "android_client_info": {
+          "package_name": "khoa.example.journeytothewest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049483795312-g6ip00b6he8omsdedecfceh8v5bt6mbp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVYDGIsT4gl_SeyRwvgmzoVgCyNQQGfQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049483795312-g6ip00b6he8omsdedecfceh8v5bt6mbp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
