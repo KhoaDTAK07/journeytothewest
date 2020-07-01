@@ -10,4 +10,9 @@ class APIString {
     return url;
   }
 
+  static String apiGetActorDetail() {
+    String url = "http://prmapi.azurewebsites.net/api/actor";
+    return url;
+  }
+
 }

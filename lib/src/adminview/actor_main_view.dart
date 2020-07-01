@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:journeytothewest/src/adminview/actor_add_new_view.dart';
+import 'package:journeytothewest/src/adminview/actor_detail_view.dart';
 import 'package:journeytothewest/src/adminview/home_page_admin.dart';
+import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/actor_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -33,7 +36,13 @@ class ActorMainPage extends StatelessWidget {
             ),
             actions: <Widget>[
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ActorAddNewView(),
+                    ),
+                  );
+                },
                 color: Colors.blueAccent,
                 child: Text(
                   "Add new",
@@ -65,52 +74,61 @@ class BodyView extends StatelessWidget {
              return Container(
                child: Column(
                  children: <Widget>[
-                   Row(
-                     children: <Widget>[
-                       Container(
-                         child: CircleAvatar(
-                           radius: 43.0,
+                   GestureDetector(
+                     onTap: () {
+                       Navigator.of(context).push(
+                         MaterialPageRoute(
+                           builder: (context) => ActorDetailView(),
+                         ),
+                       );
+                     },
+                     child: Row(
+                       children: <Widget>[
+                         Container(
                            child: CircleAvatar(
-                             radius: 40.0,
-                             backgroundImage: NetworkImage(
-                               model.actorList.actorList[index].image
+                             radius: 43.0,
+                             child: CircleAvatar(
+                               radius: 40.0,
+                               backgroundImage: NetworkImage(
+                                   model.actorList.actorList[index].image
+                               ),
                              ),
                            ),
                          ),
-                       ),
-                       SizedBox(
-                         width: 15,
-                       ),
-                       Padding(
-                         padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
-                         child: Column(
-                           children: <Widget>[
-                             Text(
-                               model.actorList.actorList[index].fullName,
-                               style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
-                             ),
-                             SizedBox(
-                               height: 4,
-                             ),
-                             Row(
+                         SizedBox(
+                           width: 15,
+                         ),
+                         Padding(
+                             padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                             child: Column(
                                children: <Widget>[
-                                  if(model.actorList.actorList[index].sex == "Male")
-                                    Image.asset("male.png",height: 20,)
-                                  else
-                                    Image.asset("female.png",height: 20,),
-                                 SizedBox(
-                                   width: 7,
-                                 ),
                                  Text(
-                                   model.actorList.actorList[index].sex,
-                                   style: TextStyle(fontSize: 18, color: Colors.black,),
+                                   model.actorList.actorList[index].fullName,
+                                   style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
+                                 ),
+                                 SizedBox(
+                                   height: 4,
+                                 ),
+                                 Row(
+                                   children: <Widget>[
+                                     if(model.actorList.actorList[index].sex == "Male")
+                                       Image.asset("male.png",height: 20,)
+                                     else
+                                       Image.asset("female.png",height: 20,),
+                                     SizedBox(
+                                       width: 7,
+                                     ),
+                                     Text(
+                                       model.actorList.actorList[index].sex,
+                                       style: TextStyle(fontSize: 18, color: Colors.black,),
+                                     ),
+                                   ],
                                  ),
                                ],
-                             ),
-                           ],
-                         )
-                       ),
-                     ],
+                             )
+                         ),
+                       ],
+                     ),
                    ),
                    SizedBox(
                      height: 10,
@@ -140,11 +158,3 @@ class BodyView extends StatelessWidget {
   }
 }
 
-class LoadingState extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-}
