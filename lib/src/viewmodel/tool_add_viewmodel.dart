@@ -1,10 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:journeytothewest/src/adminview/tool_main_view.dart';
 import 'package:journeytothewest/src/helper/validation.dart';
 import 'package:journeytothewest/src/models/add_tool_model.dart';
 import 'package:journeytothewest/src/repos/tool_repo.dart';
+import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
@@ -25,9 +30,9 @@ class ToolAddViewModel extends Model {
   bool get isLoading => _isLoading;
   bool get isReady => _isReady;
 
-  Validation _toolName;
-  Validation _description;
-  Validation _amount;
+  Validation _toolName = Validation(null, null);
+  Validation _description = Validation(null, null);
+  Validation _amount = Validation(null, null);
 
   Validation get toolName => _toolName;
   Validation get description => _description;
@@ -55,7 +60,7 @@ class ToolAddViewModel extends Model {
   void checkAmount(String amount) {
     var isNum = r'^\d+$';
     RegExp regExp = new RegExp(isNum);
-    if(!regExp.hasMatch(isNum)){
+    if(!regExp.hasMatch(amount)){
       _amount = Validation(null, "Amount must be the integer");
     } else if(int.parse(amount) <= 0) {
       _amount = Validation(null, "Amount must be higher than 0");
@@ -74,7 +79,12 @@ class ToolAddViewModel extends Model {
   }
 
   Future<String> upLoadImage() async {
-//    String basename =
+    String basename = path.basename(_image.path);
+    StorageReference reference = FirebaseStorage.instance.ref().child(basename);
+    StorageUploadTask uploadTask = reference.putFile(_image);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    String url = await reference.getDownloadURL();
+    return url;
   }
 
   void addNewTool(BuildContext context) async {
@@ -93,7 +103,46 @@ class ToolAddViewModel extends Model {
 
     if(_isReady = true) {
       _isLoading = true;
+      notifyListeners();
 
+      String currentImage;
+      if(_image != null) {
+        var url = await upLoadImage();
+        currentImage = url.toString();
+      } else {
+        currentImage = defaultImage;
+      }
+
+      _addToolModel = new AddToolModel(
+        toolName: _toolName.value,
+        description: _description.value,
+        image: currentImage,
+        amount: int.parse(_amount.value)
+      );
+
+      String addToolJson = jsonEncode(_addToolModel.toJson());
+      String msg = await _toolRepo.addNewTool(addToolJson);
+      if(msg == "Add new Tool success"){
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => ToolMainPage(model: ToolMainViewModel(),)), (Route<dynamic> route) => false);
+        Fluttertoast.showToast(
+          msg: "Add new tool success",
+          textColor: Colors.red,
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.white,
+          gravity: ToastGravity.CENTER,
+        );
+      } else {
+        _isLoading = false;
+        Fluttertoast.showToast(
+          msg: "Add new tool fail",
+          textColor: Colors.red,
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.white,
+          gravity: ToastGravity.CENTER,
+        );
+        notifyListeners();
+      }
     }
   }
 }

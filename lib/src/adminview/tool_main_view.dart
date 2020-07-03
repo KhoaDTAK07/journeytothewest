@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journeytothewest/src/adminview/tool_add_new_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
+import 'package:journeytothewest/src/viewmodel/tool_add_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -37,13 +38,13 @@ class ToolMainPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => AddNewToolPage(),
+                      builder: (context) => AddNewToolPage(model: ToolAddViewModel(),),
                     ),
                   );
                 },
                 color: Colors.blueAccent,
                 child: Text(
-                  "Add new",
+                  "Add New",
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
