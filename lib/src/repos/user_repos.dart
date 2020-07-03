@@ -23,9 +23,20 @@ class UserRepoImp implements UserRepo {
         body: _userJsonLogin
     );
 
-    Map<String, dynamic> map = jsonDecode(response.body);
-    print("Response body" + response.body);
-    return map;
+    if(response.statusCode == 415) {
+      Map<String, dynamic> map =  new Map<String, dynamic>();
+      map['StatusCode'] = 415;
+      return map;
+    } else if(response.statusCode == 204) {
+      Map<String, dynamic> map =  new Map<String, dynamic>();
+      map['StatusCode'] = 204;
+      return map;
+    } else {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      print("Response body" + response.body);
+      return map;
+    }
+
   }
 
 }

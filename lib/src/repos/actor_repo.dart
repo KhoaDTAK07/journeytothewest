@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 abstract class ActorRepo {
   Future<ActorList> getActorList ();
   Future<Actor> getActorDetail(String username);
+
 }
 
 class ActorRepoImp implements ActorRepo {
@@ -25,9 +26,27 @@ class ActorRepoImp implements ActorRepo {
   }
 
   @override
-  Future<Actor> getActorDetail(String username) {
-    String apiGetActorDetail = APIString.apiGetActorDetail();
-    
+  Future<Actor> getActorDetail(String username) async {
+    String apiGetActorDetail = APIString.apiGetActorDetailByUsername();
+
+    Map<String, String> param = {
+      'username': username,
+    };
+
+    var uri = Uri.http(apiGetActorDetail, "/api/actor", param);
+    http.Response response = await http.get(
+      uri,
+      headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8',} ,
+    );
+
+
+    Map<String, dynamic> json = jsonDecode(response.body);
+
+    print("------------");
+    Actor actor;
+    actor = Actor.fromJson(json);
+
+    return actor;
   }
 
 }

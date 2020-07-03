@@ -1,7 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:journeytothewest/src/adminview/actor_main_view.dart';
+import 'package:journeytothewest/src/adminview/scenario_main_view.dart';
+import 'package:journeytothewest/src/adminview/tool_main_view.dart';
 import 'package:journeytothewest/src/viewmodel/actor_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/scenario_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 
 class HomePageAdmin extends StatelessWidget {
 
@@ -29,7 +33,13 @@ class BodyView extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ScenarioMainPage(model: ScenarioMainViewModel(),),
+                ),
+              );
+            },
             child: Card(
               elevation: 10,
               child: Row(
@@ -53,7 +63,13 @@ class BodyView extends StatelessWidget {
             height: 30,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ToolMainPage(model: ToolMainViewModel(),),
+                ),
+              );
+            },
             child: Card(
               elevation: 10,
               child: Row(

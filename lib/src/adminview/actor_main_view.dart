@@ -3,6 +3,7 @@ import 'package:journeytothewest/src/adminview/actor_add_new_view.dart';
 import 'package:journeytothewest/src/adminview/actor_detail_view.dart';
 import 'package:journeytothewest/src/adminview/home_page_admin.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
+import 'package:journeytothewest/src/viewmodel/actor_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/actor_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -39,7 +40,7 @@ class ActorMainPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ActorAddNewView(),
+                      builder: (context) => ActorAddNewPage(),
                     ),
                   );
                 },
@@ -59,6 +60,7 @@ class ActorMainPage extends StatelessWidget {
 }
 
 class BodyView extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<ActorMainViewModel>(
@@ -76,9 +78,10 @@ class BodyView extends StatelessWidget {
                  children: <Widget>[
                    GestureDetector(
                      onTap: () {
+                       print(model.actorList.actorList[index].username);
                        Navigator.of(context).push(
                          MaterialPageRoute(
-                           builder: (context) => ActorDetailView(),
+                           builder: (context) => ActorDetailPage(model: ActorDetailViewModel(model.actorList.actorList[index].username),),
                          ),
                        );
                      },
