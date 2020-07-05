@@ -16,6 +16,13 @@ class Tool {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    "toolName": toolName,
+    "description": description,
+    "image": image,
+    "amount": amount,
+  };
+
 }
 
 class ToolList {

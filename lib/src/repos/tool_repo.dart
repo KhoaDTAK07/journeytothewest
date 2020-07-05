@@ -9,6 +9,7 @@ abstract class ToolRepo {
   Future<ToolList> getToolList();
   Future<Tool> getToolDetailByID(int toolID);
   Future<dynamic> addNewTool(String addToolJson);
+  Future<dynamic> deleteTool(int toolID);
 }
 
 class ToolRepoImp implements ToolRepo {
@@ -28,8 +29,25 @@ class ToolRepoImp implements ToolRepo {
 
   @override
   Future<Tool> getToolDetailByID(int toolID) async{
-    // TODO: implement getScenarioList
-    throw UnimplementedError();
+    String apiGetToolDetail = APIString.apiGetToolDetail() + toolID.toString();
+    print(apiGetToolDetail);
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.get(apiGetToolDetail, headers: header);
+    print(response.body);
+    print(response.statusCode);
+    Tool tool;
+
+    if(response.statusCode == 200) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      tool = Tool.fromJson(map);
+      return tool;
+    } else {
+      return tool;
+    }
+
   }
 
   @override
@@ -46,6 +64,29 @@ class ToolRepoImp implements ToolRepo {
       return "Add new Tool success";
     } else {
       return "Add fail";
+    }
+
+  }
+
+  @override
+  Future deleteTool(int toolID) async {
+    String apiDelete = APIString.apiDeleteTool();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    Map<String, String> param = {
+      'toolID': toolID.toString(),
+    };
+
+    var uri = Uri.http(apiDelete, "/api/Tools", param);
+    http.Response response = await http.delete(uri, headers: header);
+
+    if (response.statusCode == 200) {
+      return "Success";
+    } else {
+      return "Fail";
     }
 
   }

@@ -11,51 +11,42 @@ class LoginViewModel2 extends Model{
   CheckLogin get password => _password;
 
   void checkUsername(String username) async {
-    String check = validateUsername(username);
-    if(check == null){
+    notifyListeners();
+    if(username != null){
       _username = CheckLogin(username, null);
-    } else {
-      _username = CheckLogin(null,check);
+    }
+    if(username == null) {
+      _username = CheckLogin(null,"Username can't be blank");
     }
     notifyListeners();
-  }
-
-  static String validateUsername(String username) {
-    if(username == null){
-      return "Username can't be blank";
-    } else if (username.length < 6) {
-      return "Username require minimum 6 characters";
-    } else
-      return null;
   }
 
   void checkPassword(String password) async {
-    String check = validateUsername(password);
-    if(check == null){
-      _password = CheckLogin(password, null);
+    notifyListeners();
+    if(password == null){
+      _password = CheckLogin(null, "Password can't be blank");
+    } else if(password.length < 6){
+      _password = CheckLogin(null, "Password require minimum 6 characters");
     } else {
-      _password = CheckLogin(null,check);
+      _password = CheckLogin(password, null);
     }
     notifyListeners();
-  }
-
-  static String validatePassword(String password) {
-    if(password == null){
-      return "Password can't be blank";
-    } else if (password.length < 6) {
-      return "Password require minimum 6 characters";
-    } else
-      return null;
   }
 
   UserRepo _userRepo = UserRepoImp();
 
   Future<dynamic> checkLogin() async {
-    if(_username.value == null || password.value == null){
+    if(_username.value == null){
       Map<String,dynamic> map = new Map<String,dynamic>();
       map['StatusCode'] = 415;
       return map;
-    } else {
+    }
+    if(_password.value == null) {
+      Map<String,dynamic> map = new Map<String,dynamic>();
+      map['StatusCode'] = 415;
+      return map;
+    }
+    if(_username.value != null && _password.value != null) {
       Map<String,dynamic> map = await _userRepo.checkLogin(_username.value.trim(), _password.value.trim());
       return map;
     }

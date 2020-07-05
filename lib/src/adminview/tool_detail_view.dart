@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
-import 'package:journeytothewest/src/viewmodel/tool_add_viewmodel.dart';
-import 'package:path/path.dart';
+import 'package:journeytothewest/src/viewmodel/tool_detail_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class AddNewToolPage extends StatelessWidget {
-  final ToolAddViewModel model;
+class ToolDetailPage extends StatelessWidget {
+  final ToolDetailViewModel model;
 
-  AddNewToolPage({Key key, this.model}) : super(key: key);
+  ToolDetailPage({this.model});
 
   final toolName = TextEditingController();
   final description = TextEditingController();
@@ -15,20 +14,20 @@ class AddNewToolPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<ToolAddViewModel>(
+    return ScopedModel<ToolDetailViewModel> (
       model: model,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueAccent,
           centerTitle: true,
           title: new Text(
-            "Add new Tool",
+            "Tool Detail",
             textAlign: TextAlign.center,
           ),
         ),
-        body: ScopedModelDescendant<ToolAddViewModel>(
+        body: ScopedModelDescendant<ToolDetailViewModel>(
           builder: (context, child, model) {
-            if (model.isLoading) {
+            if(model.isLoading) {
               return LoadingState();
             } else {
               return Builder(
@@ -62,13 +61,13 @@ class AddNewToolPage extends StatelessWidget {
                           width: double.infinity,
                           height: 80,
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
+                            padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
                             child: RaisedButton(
                               onPressed: (){
-                                model.addNewTool(context);
+
                               },
                               child: Text(
-                                "Add new Tool",
+                                "Update Tool",
                                 style: TextStyle(color: Colors.white, fontSize: 18),
                               ),
                               color: Colors.red,
@@ -106,14 +105,15 @@ class AddNewToolPage extends StatelessWidget {
           height: 70,
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
           child: TextField(
-            controller: toolName,
+            controller: model.nameFieldController,
             onChanged: (text) {
-              model.checkToolName(text);
+              model.catchChangeName(text);
             },
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
               border: new OutlineInputBorder(
                   borderSide: new BorderSide(color: Colors.teal)),
+              errorText: model.toolName.error,
             ),
           ),
         ),
@@ -126,9 +126,9 @@ class AddNewToolPage extends StatelessWidget {
       children: <Widget>[
         Container(
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+          padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
           child: Text(
-            "Description: ",
+            "Tool Description: ",
             style: TextStyle(
                 fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -137,14 +137,15 @@ class AddNewToolPage extends StatelessWidget {
           height: 70,
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
           child: TextField(
-            controller: description,
+            controller: model.descriptionFieldController,
             onChanged: (text) {
-              model.checkDescription(text);
+              model.catchChangeDescription(text);
             },
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
               border: new OutlineInputBorder(
                   borderSide: new BorderSide(color: Colors.teal)),
+              errorText: model.toolDescription.error,
             ),
           ),
         ),
@@ -157,9 +158,9 @@ class AddNewToolPage extends StatelessWidget {
       children: <Widget>[
         Container(
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+          padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
           child: Text(
-            "Amount: ",
+            "Tool Amount: ",
             style: TextStyle(
                 fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -168,17 +169,17 @@ class AddNewToolPage extends StatelessWidget {
           height: 70,
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
           child: TextField(
-            controller: amount,
+            controller: model.amountFieldController,
             onChanged: (text) {
-              model.checkAmount(text);
+              model.catchChangeAmount(text);
             },
+            keyboardType: TextInputType.number,
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
               border: new OutlineInputBorder(
                   borderSide: new BorderSide(color: Colors.teal)),
-              errorText: model.amount.error
+              errorText: model.toolAmount.error,
             ),
-            keyboardType: TextInputType.number,
           ),
         ),
       ],
@@ -220,7 +221,7 @@ class AddNewToolPage extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                model.getUserImage();
+
               },
             ),
           ),
@@ -228,5 +229,4 @@ class AddNewToolPage extends StatelessWidget {
       ],
     );
   }
-
 }

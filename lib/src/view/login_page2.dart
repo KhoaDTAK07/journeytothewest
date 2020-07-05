@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:journeytothewest/src/adminview/home_page_admin.dart';
@@ -69,6 +70,7 @@ class LoginPage2 extends StatelessWidget {
 
   void login(BuildContext context) async {
     Map<String, dynamic> map = await model.checkLogin();
+    print(map.values);
     if(map['isAdmin'] == 1) {
       Navigator.push(context,
         MaterialPageRoute(builder: (context) => HomePageAdmin(),
@@ -77,6 +79,8 @@ class LoginPage2 extends StatelessWidget {
     } else if(map['isAdmin'] == 0) {
 
     } else if(map['StatusCode'] == 415) {
+      print("-----------");
+      print(username.text);
       username.text = "";
       password.text = "";
       Fluttertoast.showToast(
@@ -104,8 +108,8 @@ class LoginPage2 extends StatelessWidget {
       color: Color.fromARGB(250, 193, 212, 241),
       child: TextField(
         controller: username,
-        onChanged: (value) {
-          model.checkUsername(value);
+        onChanged: (text) {
+          model.checkUsername(text);
         },
         style: TextStyle(
           fontSize: 18,
@@ -127,8 +131,8 @@ class LoginPage2 extends StatelessWidget {
       color: Color.fromARGB(250, 193, 212, 241),
       child: TextField(
         controller: password,
-        onChanged: (value) {
-          model.checkPassword(value);
+        onChanged: (text) {
+          model.checkPassword(text);
         },
         style: TextStyle(
           fontSize: 18,

@@ -60,12 +60,14 @@ class ToolAddViewModel extends Model {
   void checkAmount(String amount) {
     var isNum = r'^\d+$';
     RegExp regExp = new RegExp(isNum);
+    if(amount == null){
+      _amount = Validation(null, "Amount can't be blank");
+    }
     if(!regExp.hasMatch(amount)){
       _amount = Validation(null, "Amount must be the integer");
-    } else if(int.parse(amount) <= 0) {
+    }
+    if(int.parse(amount) <= 0){
       _amount = Validation(null, "Amount must be higher than 0");
-    } else if(amount == null){
-      _amount = Validation(null, "Amount can't be blank");
     } else {
       _amount = Validation(amount, null);
     }
@@ -88,19 +90,24 @@ class ToolAddViewModel extends Model {
   }
 
   void addNewTool(BuildContext context) async {
+    _isReady = true;
     if(_toolName.value == null) {
+      print(_toolName.value);
       checkToolName("");
       _isReady = false;
     }
     if(_description.value == null) {
+      print(_description.value);
       checkDescription("");
       _isReady = false;
     }
     if(_amount.value == null) {
+      print(_amount.value);
       checkAmount("");
       _isReady = false;
     }
-
+    print("-----------");
+    print(_isReady);
     if(_isReady = true) {
       _isLoading = true;
       notifyListeners();
@@ -122,22 +129,27 @@ class ToolAddViewModel extends Model {
 
       String addToolJson = jsonEncode(_addToolModel.toJson());
       String msg = await _toolRepo.addNewTool(addToolJson);
+      print('HI'+msg);
       if(msg == "Add new Tool success"){
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => ToolMainPage(model: ToolMainViewModel(),)), (Route<dynamic> route) => false);
+        print('1');
         Fluttertoast.showToast(
           msg: "Add new tool success",
           textColor: Colors.red,
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           backgroundColor: Colors.white,
           gravity: ToastGravity.CENTER,
+        );
+        print('2');
+        Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => ToolMainPage(model: ToolMainViewModel(),),
+          ),
         );
       } else {
         _isLoading = false;
         Fluttertoast.showToast(
           msg: "Add new tool fail",
           textColor: Colors.red,
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           backgroundColor: Colors.white,
           gravity: ToastGravity.CENTER,
         );
