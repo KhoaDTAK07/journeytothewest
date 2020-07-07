@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:journeytothewest/src/helper/api_string.dart';
 import 'package:journeytothewest/src/models/actor_model.dart';
@@ -7,7 +8,8 @@ import 'package:http/http.dart' as http;
 abstract class ActorRepo {
   Future<ActorList> getActorList ();
   Future<Actor> getActorDetail(String username);
-
+  Future<ActorList> searchActorListByName (String fullName);
+  Future<dynamic> deleteActor(String username);
 }
 
 class ActorRepoImp implements ActorRepo {
@@ -27,26 +29,67 @@ class ActorRepoImp implements ActorRepo {
 
   @override
   Future<Actor> getActorDetail(String username) async {
-    String apiGetActorDetail = APIString.apiGetActorDetailByUsername();
+    String apiGetActorDetail = APIString.apiGetActorDetailByUsername()+username;
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.get(apiGetActorDetail, headers: header);
+
+    Actor actor;
+    if(response.statusCode == 200) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      actor = Actor.fromJson(map);
+      return actor;
+    } else {
+      return actor;
+    }
+  }
+
+  @override
+  Future<ActorList> searchActorListByName(String fullName) async {
+    String apiGetListByName = APIString.apiGetActorByName();
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    Map<String, String> param = {
+      'fullName': fullName,
+    };
+
+    var uri = Uri.http(apiGetListByName, "/api/Actor", param);
+    http.Response response = await http.get(uri, headers: header);
+
+    List<dynamic> list = jsonDecode(response.body);
+
+    ActorList actorList;
+
+    actorList = ActorList.fromJson(list);
+
+    return actorList;
+  }
+
+  @override
+  Future deleteActor(String username) async {
+    String apiDelete = APIString.apiDeleteActor();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
 
     Map<String, String> param = {
       'username': username,
     };
 
-    var uri = Uri.http(apiGetActorDetail, "/api/actor", param);
-    http.Response response = await http.get(
-      uri,
-      headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8',} ,
-    );
+    var uri = Uri.http(apiDelete, "/api/Actor", param);
+    http.Response response = await http.delete(uri, headers: header);
 
-
-    Map<String, dynamic> json = jsonDecode(response.body);
-
-    print("------------");
-    Actor actor;
-    actor = Actor.fromJson(json);
-
-    return actor;
+    if (response.statusCode == 200) {
+      return "Success";
+    } else {
+      return "Fail";
+    }
   }
 
 }

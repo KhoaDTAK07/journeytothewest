@@ -10,6 +10,7 @@ abstract class ToolRepo {
   Future<Tool> getToolDetailByID(int toolID);
   Future<dynamic> addNewTool(String addToolJson);
   Future<dynamic> deleteTool(int toolID);
+  Future<ToolList> searchToolListByName(String toolName);
 }
 
 class ToolRepoImp implements ToolRepo {
@@ -89,6 +90,29 @@ class ToolRepoImp implements ToolRepo {
       return "Fail";
     }
 
+  }
+
+  @override
+  Future<ToolList> searchToolListByName(String toolName) async {
+    String apiGetListByName = APIString.apiGetToolByName();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    Map<String, String> param = {
+      'toolName': toolName,
+    };
+
+    var uri = Uri.http(apiGetListByName, "/api/Tools", param);
+    http.Response response = await http.get(uri, headers: header);
+
+    List<dynamic> list = jsonDecode(response.body);
+
+    ToolList toolList;
+    toolList = ToolList.fromJson(list);
+
+    return toolList;
   }
 
 }

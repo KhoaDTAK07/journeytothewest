@@ -9,12 +9,15 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ToolMainViewModel extends Model {
   ToolRepo _toolRepo = ToolRepoImp();
+  final txtSearch = TextEditingController();
 
   ToolList _toolList;
   bool _isLoading = false;
+  bool _isNotHave = false;
 
   ToolList get toolList => _toolList;
   bool get isLoading => _isLoading;
+  bool get isHave => _isNotHave;
 
   ToolMainViewModel() {
     getToolList();
@@ -50,6 +53,31 @@ class ToolMainViewModel extends Model {
         backgroundColor: Colors.white,
         gravity: ToastGravity.CENTER,
       );
+    }
+  }
+
+  void searchToolList(String toolName) async {
+    if(toolName == '') {
+      getToolList();
+    } else {
+      _isLoading = true;
+
+      if(_toolList != null) {
+        _toolList.toolList.clear();
+      }
+
+      notifyListeners();
+
+      _toolList = await _toolRepo.searchToolListByName(toolName).whenComplete(() {
+        _toolList = toolList;
+        _isLoading = false;
+      });
+
+      if(toolList == null) {
+        _isNotHave = true;
+      }
+
+      notifyListeners();
     }
   }
 

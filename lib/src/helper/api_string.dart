@@ -7,32 +7,32 @@ class APIString {
 
   //-------------------- API Actor ----------------------------------
   static String apiGetAllActor() {
-    String url = "http://prmapi.azurewebsites.net/api/actor/getall";
+    String url = "http://prmapi.azurewebsites.net/api/Actor/getall";
     return url;
   }
 
   static String apiGetActorDetailByUsername() {
-    String url = "prmapi.azurewebsites.net";
+    String url = "http://prmapi.azurewebsites.net/api/Actor/";
     return url;
   }
 
   static String apiGetActorByName() {
-    String url = "";
+    String url = "prmapi.azurewebsites.net";
     return url;
   }
 
   static String apiAddActor() {
-    String url = "";
+    String url = "http://prmapi.azurewebsites.net/api/Actor";
     return url;
   }
 
   static String apiUpdateActor() {
-    String url = "";
+    String url = "http://prmapi.azurewebsites.net/api/Actor";
     return url;
   }
 
   static String apiDeleteActor() {
-    String url = "";
+    String url = "prmapi.azurewebsites.net";
     return url;
   }
 
@@ -73,23 +73,28 @@ class APIString {
     return url;
   }
 
+  static String apiGetScenarioByName() {
+    String url = "prmapi.azurewebsites.net";
+    return url;
+}
+
   static String apiGetScenarioDetail() {
-    String url = "";
+    String url = "http://prmapi.azurewebsites.net/api/Scenario/";
     return url;
   }
 
   static String apiAddScenario() {
-    String url = "";
+    String url = "http://prmapi.azurewebsites.net/api/Scenario";
     return url;
   }
 
   static String apiUpdateScenario() {
-    String url = "";
+    String url = "http://prmapi.azurewebsites.net/api/Scenario/";
     return url;
   }
 
   static String apiDeleteScenario() {
-    String url = "";
+    String url = "http://prmapi.azurewebsites.net/api/Scenario";
     return url;
   }
 }

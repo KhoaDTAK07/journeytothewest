@@ -221,7 +221,7 @@ class ToolDetailPage extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-
+                model.getToolImage();
               },
             ),
           ),

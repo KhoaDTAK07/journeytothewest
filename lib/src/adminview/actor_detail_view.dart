@@ -8,7 +8,7 @@ import 'package:scoped_model/scoped_model.dart';
 class ActorDetailPage extends StatelessWidget {
   final ActorDetailViewModel model;
 
-  ActorDetailPage({Key key, this.model}) : super(key: key);
+  ActorDetailPage({this.model});
 
   final fullname = TextEditingController();
   final sex = TextEditingController();
@@ -21,61 +21,59 @@ class ActorDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ScopedModel<ActorDetailViewModel> (
-        model: model,
-        child: Scaffold(
-          appBar: new AppBar(
-            centerTitle: true,
-            title: new Text(
-              "Actor's Profile",
-            ),
+    return ScopedModel<ActorDetailViewModel> (
+      model: model,
+      child: Scaffold(
+        appBar: new AppBar(
+          centerTitle: true,
+          title: new Text(
+            "Actor's Profile",
           ),
-          body: ScopedModelDescendant<ActorDetailViewModel>(
-            builder: (context, child, model){
-              if(model.isloading){
-                return LoadingState();
-              } else {
-                return SingleChildScrollView(
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+        ),
+        body: ScopedModelDescendant<ActorDetailViewModel>(
+          builder: (context, child, model){
+            if(model.isloading){
+              return LoadingState();
+            } else {
+              return SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: CircleAvatar(
+                          radius: 73.0,
                           child: CircleAvatar(
-                            radius: 73.0,
-                            child: CircleAvatar(
-                              radius: 70.0,
-                              backgroundImage: NetworkImage(
-                                  model.actor.image
-                              ),
+                            radius: 70.0,
+                            backgroundImage: NetworkImage(
+                                model.actor.image
                             ),
                           ),
                         ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                color: Colors.black12,
-                                width: double.infinity,
-                                height: 2,
-                              ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              color: Colors.black12,
+                              width: double.infinity,
+                              height: 2,
                             ),
-                          ],
-                        ),
-                        _fullname(),
-                        _sex(),
-                        _description(),
-                        _phone(),
-                        _email(),
-                        _dob(),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      _fullname(),
+                      _sex(),
+                      _description(),
+                      _phone(),
+                      _email(),
+                      _dob(),
+                    ],
                   ),
-                );
-              }
-            },
-          ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

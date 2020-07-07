@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:journeytothewest/src/viewmodel/actor_add_viewmodel.dart';
 
 class ActorAddNewPage extends StatelessWidget {
+  final ActorAddViewModel model;
+
+  ActorAddNewPage({this.model});
+
   final username = TextEditingController();
   final password = TextEditingController();
   final fullName = TextEditingController();

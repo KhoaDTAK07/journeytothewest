@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:journeytothewest/src/adminview/tool_main_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/tool_add_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 import 'package:path/path.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -12,6 +15,14 @@ class AddNewToolPage extends StatelessWidget {
   final toolName = TextEditingController();
   final description = TextEditingController();
   final amount = TextEditingController();
+
+  String msg;
+
+  Future<dynamic> getMsgAdd(BuildContext context) async {
+    String getMsg = await model.addNewTool(context);
+    msg = getMsg;
+    print(msg);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,56 +43,84 @@ class AddNewToolPage extends StatelessWidget {
               return LoadingState();
             } else {
               return Builder(
-                builder: (context) => Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        _toolImageField(),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
+                builder: (context) =>
+                    Container(
+                      child: SingleChildScrollView(
+                        child: Column(
                           children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                color: Colors.black12,
-                                width: double.infinity,
-                                height: 2,
+                            _toolImageField(),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    color: Colors.black12,
+                                    width: double.infinity,
+                                    height: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            _toolNameField(),
+
+                            _toolDescriptionField(),
+
+                            _toolAmountField(),
+
+                            SizedBox(
+                              width: double.infinity,
+                              height: 80,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    30, 30, 30, 0),
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    getMsgAdd(context).whenComplete(() => {
+                                      if(msg == "Add new Tool success") {
+                                        Fluttertoast.showToast(
+                                          msg: "Add new tool success",
+                                          textColor: Colors.red,
+                                          toastLength: Toast.LENGTH_LONG,
+                                          backgroundColor: Colors.white,
+                                          gravity: ToastGravity.CENTER,
+                                        ),
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) =>
+                                              ToolMainPage(
+                                                model: ToolMainViewModel(),),
+                                          ),
+                                        )
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: "Add new tool fail",
+                                          textColor: Colors.red,
+                                          toastLength: Toast.LENGTH_LONG,
+                                          backgroundColor: Colors.white,
+                                          gravity: ToastGravity.CENTER,
+                                        )
+                                      }
+                                    });
+                                  },
+                                  child: Text(
+                                    "Add new Tool",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                  color: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(6)),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
-
-                        _toolNameField(),
-
-                        _toolDescriptionField(),
-
-                        _toolAmountField(),
-
-                        SizedBox(
-                          width: double.infinity,
-                          height: 80,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
-                            child: RaisedButton(
-                              onPressed: (){
-                                model.addNewTool(context);
-                              },
-                              child: Text(
-                                "Add new Tool",
-                                style: TextStyle(color: Colors.white, fontSize: 18),
-                              ),
-                              color: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
               );
             }
           },
@@ -112,6 +151,7 @@ class AddNewToolPage extends StatelessWidget {
             },
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+              errorText: model.toolName.error,
               border: new OutlineInputBorder(
                   borderSide: new BorderSide(color: Colors.teal)),
             ),
@@ -143,6 +183,7 @@ class AddNewToolPage extends StatelessWidget {
             },
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+              errorText: model.description.error,
               border: new OutlineInputBorder(
                   borderSide: new BorderSide(color: Colors.teal)),
             ),
@@ -173,10 +214,10 @@ class AddNewToolPage extends StatelessWidget {
               model.checkAmount(text);
             },
             decoration: new InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
-              border: new OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.teal)),
-              errorText: model.amount.error
+                contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+                border: new OutlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.teal)),
+                errorText: model.amount.error
             ),
             keyboardType: TextInputType.number,
           ),

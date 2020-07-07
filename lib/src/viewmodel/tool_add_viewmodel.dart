@@ -40,7 +40,8 @@ class ToolAddViewModel extends Model {
 
 
   void checkToolName(String name) {
-    if(name == null){
+    print(name);
+    if(name == null || name.length == 0){
       _toolName = Validation(null, "Tool's name can't be blank");
     } else {
       _toolName = Validation(name, null);
@@ -49,7 +50,7 @@ class ToolAddViewModel extends Model {
   }
 
   void checkDescription(String description) {
-    if(description == null){
+    if(description == null || description.length == 0){
       _description = Validation(null, "Description can't be blank");
     } else {
       _description = Validation(description, null);
@@ -60,7 +61,7 @@ class ToolAddViewModel extends Model {
   void checkAmount(String amount) {
     var isNum = r'^\d+$';
     RegExp regExp = new RegExp(isNum);
-    if(amount == null){
+    if(amount == null || amount.length == 0){
       _amount = Validation(null, "Amount can't be blank");
     }
     if(!regExp.hasMatch(amount)){
@@ -89,21 +90,21 @@ class ToolAddViewModel extends Model {
     return url;
   }
 
-  void addNewTool(BuildContext context) async {
+  Future<dynamic> addNewTool(BuildContext context) async {
     _isReady = true;
     if(_toolName.value == null) {
       print(_toolName.value);
-      checkToolName("");
+      checkToolName(null);
       _isReady = false;
     }
     if(_description.value == null) {
       print(_description.value);
-      checkDescription("");
+      checkDescription(null);
       _isReady = false;
     }
     if(_amount.value == null) {
       print(_amount.value);
-      checkAmount("");
+      checkAmount(null);
       _isReady = false;
     }
     print("-----------");
@@ -129,32 +130,7 @@ class ToolAddViewModel extends Model {
 
       String addToolJson = jsonEncode(_addToolModel.toJson());
       String msg = await _toolRepo.addNewTool(addToolJson);
-      print('HI'+msg);
-      if(msg == "Add new Tool success"){
-        print('1');
-        Fluttertoast.showToast(
-          msg: "Add new tool success",
-          textColor: Colors.red,
-          toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.white,
-          gravity: ToastGravity.CENTER,
-        );
-        print('2');
-        Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => ToolMainPage(model: ToolMainViewModel(),),
-          ),
-        );
-      } else {
-        _isLoading = false;
-        Fluttertoast.showToast(
-          msg: "Add new tool fail",
-          textColor: Colors.red,
-          toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.white,
-          gravity: ToastGravity.CENTER,
-        );
-        notifyListeners();
-      }
+      return msg;
     }
   }
 }
