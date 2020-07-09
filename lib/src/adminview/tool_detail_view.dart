@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:journeytothewest/src/view/drawer_bar_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
+import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_detail_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -31,7 +34,7 @@ class ToolDetailPage extends StatelessWidget {
               return LoadingState();
             } else {
               return Builder(
-                builder: (context) => Container(
+                builder: (contextBuilder) => Container(
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -63,8 +66,27 @@ class ToolDetailPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
                             child: RaisedButton(
-                              onPressed: (){
-
+                              onPressed: () async {
+                                bool isUpdated = await model.updateTool();
+                                if(isUpdated) {
+                                  Fluttertoast.showToast(
+                                    msg: "Update Tool success",
+                                    textColor: Colors.red,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.white,
+                                    gravity: ToastGravity.CENTER,
+                                  );
+                                  Navigator.pop(context);
+                                } else {
+                                  Fluttertoast.showToast(
+                                    msg: "Update Tool fail",
+                                    textColor: Colors.red,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.white,
+                                    gravity: ToastGravity.CENTER,
+                                  );
+                                  Navigator.of(context).pop();
+                                }
                               },
                               child: Text(
                                 "Update Tool",
@@ -107,7 +129,7 @@ class ToolDetailPage extends StatelessWidget {
           child: TextField(
             controller: model.nameFieldController,
             onChanged: (text) {
-              model.catchChangeName(text);
+              model.checkToolName(text);
             },
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -139,7 +161,7 @@ class ToolDetailPage extends StatelessWidget {
           child: TextField(
             controller: model.descriptionFieldController,
             onChanged: (text) {
-              model.catchChangeDescription(text);
+              model.checkDescription(text);
             },
             decoration: new InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -171,7 +193,7 @@ class ToolDetailPage extends StatelessWidget {
           child: TextField(
             controller: model.amountFieldController,
             onChanged: (text) {
-              model.catchChangeAmount(text);
+              model.checkAmount(text);
             },
             keyboardType: TextInputType.number,
             decoration: new InputDecoration(

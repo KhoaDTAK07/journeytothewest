@@ -10,19 +10,11 @@ import 'package:scoped_model/scoped_model.dart';
 class AddNewToolPage extends StatelessWidget {
   final ToolAddViewModel model;
 
-  AddNewToolPage({Key key, this.model}) : super(key: key);
+  AddNewToolPage({this.model});
 
   final toolName = TextEditingController();
   final description = TextEditingController();
   final amount = TextEditingController();
-
-  String msg;
-
-  Future<dynamic> getMsgAdd(BuildContext context) async {
-    String getMsg = await model.addNewTool(context);
-    msg = getMsg;
-    print(msg);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +35,7 @@ class AddNewToolPage extends StatelessWidget {
               return LoadingState();
             } else {
               return Builder(
-                builder: (context) =>
+                builder: (contextBuilder) =>
                     Container(
                       child: SingleChildScrollView(
                         child: Column(
@@ -77,32 +69,31 @@ class AddNewToolPage extends StatelessWidget {
                                 padding: const EdgeInsets.fromLTRB(
                                     30, 30, 30, 0),
                                 child: RaisedButton(
-                                  onPressed: () {
-                                    getMsgAdd(context).whenComplete(() => {
-                                      if(msg == "Add new Tool success") {
-                                        Fluttertoast.showToast(
-                                          msg: "Add new tool success",
-                                          textColor: Colors.red,
-                                          toastLength: Toast.LENGTH_LONG,
-                                          backgroundColor: Colors.white,
-                                          gravity: ToastGravity.CENTER,
+                                  onPressed: () async {
+                                    bool isCreate = await model.addNewTool();
+                                    if(isCreate) {
+                                      Fluttertoast.showToast(
+                                        msg: "Add new Tool success",
+                                        textColor: Colors.red,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        backgroundColor: Colors.white,
+                                        gravity: ToastGravity.CENTER,
+                                      );
+                                      Navigator.of(context).pop(
+                                        MaterialPageRoute(
+                                          builder: (context) => ToolMainPage(model: ToolMainViewModel(),),
                                         ),
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) =>
-                                              ToolMainPage(
-                                                model: ToolMainViewModel(),),
-                                          ),
-                                        )
-                                      } else {
-                                        Fluttertoast.showToast(
-                                          msg: "Add new tool fail",
-                                          textColor: Colors.red,
-                                          toastLength: Toast.LENGTH_LONG,
-                                          backgroundColor: Colors.white,
-                                          gravity: ToastGravity.CENTER,
-                                        )
-                                      }
-                                    });
+                                      );
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: "Add new Tool fail",
+                                        textColor: Colors.red,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        backgroundColor: Colors.white,
+                                        gravity: ToastGravity.CENTER,
+                                      );
+                                      Navigator.of(context).pop();
+                                    }
                                   },
                                   child: Text(
                                     "Add new Tool",

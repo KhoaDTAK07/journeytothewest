@@ -22,7 +22,6 @@ class Tool {
     "image": image,
     "amount": amount,
   };
-
 }
 
 class ToolList {

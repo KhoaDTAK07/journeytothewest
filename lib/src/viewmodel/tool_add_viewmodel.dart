@@ -90,7 +90,7 @@ class ToolAddViewModel extends Model {
     return url;
   }
 
-  Future<dynamic> addNewTool(BuildContext context) async {
+  Future<bool> addNewTool() async {
     _isReady = true;
     if(_toolName.value == null) {
       print(_toolName.value);
@@ -129,8 +129,8 @@ class ToolAddViewModel extends Model {
       );
 
       String addToolJson = jsonEncode(_addToolModel.toJson());
-      String msg = await _toolRepo.addNewTool(addToolJson);
-      return msg;
+
+      return _toolRepo.addNewTool(addToolJson);
     }
   }
 }

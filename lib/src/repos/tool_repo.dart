@@ -8,9 +8,10 @@ import 'package:http/http.dart' as http;
 abstract class ToolRepo {
   Future<ToolList> getToolList();
   Future<Tool> getToolDetailByID(int toolID);
-  Future<dynamic> addNewTool(String addToolJson);
+  Future<bool> addNewTool(String addToolJson);
   Future<dynamic> deleteTool(int toolID);
   Future<ToolList> searchToolListByName(String toolName);
+  Future<dynamic> updateTool(int toolID, String updateJson);
 }
 
 class ToolRepoImp implements ToolRepo {
@@ -52,7 +53,7 @@ class ToolRepoImp implements ToolRepo {
   }
 
   @override
-  Future addNewTool(String addToolJson) async {
+  Future<bool> addNewTool(String addToolJson) async {
     String apiAddTool = APIString.apiAddTool();
 
     Map<String, String> header = {
@@ -61,10 +62,13 @@ class ToolRepoImp implements ToolRepo {
 
     http.Response response = await http.post(apiAddTool, headers: header, body: addToolJson);
 
+    bool isCreate = true;
+
     if(response.statusCode == 200) {
-      return "Add new Tool success";
+      return isCreate;
     } else {
-      return "Add fail";
+      isCreate = false;
+      return isCreate;
     }
 
   }
@@ -83,6 +87,8 @@ class ToolRepoImp implements ToolRepo {
 
     var uri = Uri.http(apiDelete, "/api/Tools", param);
     http.Response response = await http.delete(uri, headers: header);
+
+    print(response.statusCode == 200);
 
     if (response.statusCode == 200) {
       return "Success";
@@ -113,6 +119,29 @@ class ToolRepoImp implements ToolRepo {
     toolList = ToolList.fromJson(list);
 
     return toolList;
+  }
+
+  @override
+  Future updateTool(int toolID, String updateJson) async {
+    String apiUpdateTool = APIString.apiUpdateTool() + toolID.toString();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.put(apiUpdateTool, headers: header, body: updateJson);
+
+    bool isCreate = true;
+
+    print("---------");
+    print(response.statusCode);
+
+    if(response.statusCode == 200) {
+      return isCreate;
+    } else {
+      isCreate = false;
+      return isCreate;
+    }
   }
 
 }

@@ -4,10 +4,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:journeytothewest/src/adminview/actor_add_new_view.dart';
 import 'package:journeytothewest/src/adminview/actor_detail_view.dart';
 import 'package:journeytothewest/src/adminview/home_page_admin.dart';
+import 'package:journeytothewest/src/view/drawer_bar_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/actor_add_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/actor_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/actor_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'not_found_page.dart';

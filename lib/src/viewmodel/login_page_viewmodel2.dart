@@ -1,6 +1,7 @@
 import 'package:journeytothewest/src/models/check_login_model.dart';
 import 'package:journeytothewest/src/repos/user_repos.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel2 extends Model{
 
@@ -36,20 +37,29 @@ class LoginViewModel2 extends Model{
   UserRepo _userRepo = UserRepoImp();
 
   Future<dynamic> checkLogin() async {
+    Map<String,dynamic> map = new Map<String,dynamic>();
     if(_username.value == null){
-      Map<String,dynamic> map = new Map<String,dynamic>();
       map['StatusCode'] = 415;
       return map;
     }
     if(_password.value == null) {
-      Map<String,dynamic> map = new Map<String,dynamic>();
       map['StatusCode'] = 415;
       return map;
     }
     if(_username.value != null && _password.value != null) {
-      Map<String,dynamic> map = await _userRepo.checkLogin(_username.value.trim(), _password.value.trim());
+      map = await _userRepo.checkLogin(_username.value.trim(), _password.value.trim());
+
+      if(map.isNotEmpty) {
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+        sharedPreferences.setString("username", map['username']);
+        sharedPreferences.setString("fullName", map['fullname']);
+        sharedPreferences.setString("image", map['image']);
+      }
+
       return map;
     }
+
   }
 
 }

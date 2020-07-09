@@ -3,7 +3,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:journeytothewest/src/adminview/tool_add_new_view.dart';
 import 'package:journeytothewest/src/adminview/tool_detail_view.dart';
 import 'package:journeytothewest/src/models/tool_model.dart';
+import 'package:journeytothewest/src/view/drawer_bar_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
+import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_add_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
@@ -30,14 +32,21 @@ class ToolMainPage extends StatelessWidget {
           ),
           actions: <Widget>[
             RaisedButton(
-              onPressed: () {
-                Navigator.of(context).push(
+              onPressed: () async {
+//                    Navigator.of(context).push(
+//                    MaterialPageRoute(
+//                      builder: (context) => AddNewToolPage(
+//                        model: ToolAddViewModel(),
+//                      ),
+//                    ),
+//                  );
+                final isCreate = await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => AddNewToolPage(
                       model: ToolAddViewModel(),
                     ),
                   ),
-                );
+                ).then((value) => model.getToolList());
               },
               color: Colors.blueAccent,
               child: Text(
@@ -130,7 +139,7 @@ class ToolMainPage extends StatelessWidget {
                   model: ToolDetailViewModel(toolID),
                 ),
               ),
-            );
+            ).then((value) => model.getToolList());
           },
           child: Row(
             children: <Widget>[

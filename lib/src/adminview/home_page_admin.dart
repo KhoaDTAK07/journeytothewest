@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:journeytothewest/src/adminview/actor_main_view.dart';
 import 'package:journeytothewest/src/adminview/scenario_main_view.dart';
 import 'package:journeytothewest/src/adminview/tool_main_view.dart';
+import 'package:journeytothewest/src/view/drawer_bar_view.dart';
 import 'package:journeytothewest/src/viewmodel/actor_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_main_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 
@@ -18,6 +20,7 @@ class HomePageAdmin extends StatelessWidget {
             "Journey to the West App",
           ),
         ),
+        drawer: DrawerBar(model: DrawerViewModel(),),
         body: BodyView(),
       ),
     );
