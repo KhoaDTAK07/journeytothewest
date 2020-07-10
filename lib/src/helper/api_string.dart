@@ -94,7 +94,7 @@ class APIString {
   }
 
   static String apiDeleteScenario() {
-    String url = "http://prmapi.azurewebsites.net/api/Scenario";
+    String url = "prmapi.azurewebsites.net";
     return url;
   }
 }

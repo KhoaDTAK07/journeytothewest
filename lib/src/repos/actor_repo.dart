@@ -10,6 +10,7 @@ abstract class ActorRepo {
   Future<Actor> getActorDetail(String username);
   Future<ActorList> searchActorListByName (String fullName);
   Future<dynamic> deleteActor(String username);
+  Future<bool> addNewActor(String addActorJson);
 }
 
 class ActorRepoImp implements ActorRepo {
@@ -90,6 +91,29 @@ class ActorRepoImp implements ActorRepo {
     } else {
       return "Fail";
     }
+  }
+
+  @override
+  Future<bool> addNewActor(String addActorJson) async {
+    String apiAddActor = APIString.apiAddActor();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.post(apiAddActor, headers: header, body: addActorJson);
+
+    bool isCreate = true;
+
+    print("Status code: " +response.statusCode.toString());
+
+    if(response.statusCode == 204) {
+      return isCreate;
+    } else {
+      isCreate = false;
+      return isCreate;
+    }
+
   }
 
 }

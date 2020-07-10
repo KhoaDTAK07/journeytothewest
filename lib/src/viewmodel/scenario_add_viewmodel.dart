@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:journeytothewest/src/helper/validation.dart';
 import 'package:journeytothewest/src/models/add_scenario_model.dart';
@@ -155,10 +157,19 @@ class ScenarioAddViewModel extends Model {
 
     _selectedEndDate.compareTo(_selectedStartDate);
     var compare = _selectedEndDate.compareTo(_selectedStartDate);
+    print("Compare: ");
+    print(compare);
 
     if(compare < 0){
-      _selectedEndDate = null;
+      _selectedEndDate = DateTime.now();
       _isReady = false;
+      Fluttertoast.showToast(
+        msg: "The end date cannot be earlier than the start date",
+        textColor: Colors.red,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.white,
+        gravity: ToastGravity.CENTER,
+      );
       notifyListeners();
     }
 

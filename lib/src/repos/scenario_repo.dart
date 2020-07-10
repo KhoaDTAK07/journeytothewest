@@ -60,7 +60,7 @@ class ScenarioRepoImp implements ScenarioRepo {
       'scenarioID': scenarioID.toString(),
     };
 
-    var uri = Uri.http(apiDelete, "/api/Tools", param);
+    var uri = Uri.http(apiDelete, "/api/Scenario", param);
     http.Response response = await http.delete(uri, headers: header);
 
     if (response.statusCode == 200) {

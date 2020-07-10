@@ -33,14 +33,14 @@ class ActorMainPage extends StatelessWidget {
           ),
           actions: <Widget>[
             RaisedButton(
-              onPressed: () {
-//                  Navigator.of(context).push(
-//                    MaterialPageRoute(
-//                      builder: (context) => ActorAddNewPage(
-//                        model: ActorAddViewModel(),
-//                      ),
-//                    ),
-//                  );
+              onPressed: () async {
+                final isCreate = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ActorAddNewPage(
+                      model: ActorAddViewModel(),
+                    ),
+                  ),
+                ).then((value) => model.getActorList());
               },
               color: Colors.blueAccent,
               child: Text(
