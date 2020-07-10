@@ -4,6 +4,7 @@ import 'package:journeytothewest/src/adminview/scenario_add_view.dart';
 import 'package:journeytothewest/src/view/drawer_bar_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/scenario_add_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -28,12 +29,14 @@ class ScenarioMainPage extends StatelessWidget {
           ),
           actions: <Widget>[
             RaisedButton(
-              onPressed: () {
-                Navigator.of(context).push(
+              onPressed: () async {
+                final isCreate = await Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => AddNewScenarioPage(),
+                    builder: (context) => AddNewScenarioPage(
+                      model: ScenarioAddViewModel(),
+                    ),
                   ),
-                );
+                ).then((value) => model.getScenarioList());
               },
               color: Colors.blueAccent,
               child: Text(

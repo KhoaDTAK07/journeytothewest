@@ -9,7 +9,7 @@ abstract class ScenarioRepo {
   Future<ScenarioList> getScenarioList();
   Future<Scenario> getScenarioDetailByID(int scenarioID);
   Future<ScenarioList> searchScenarioListByName(String scenarioName);
-  Future<dynamic> addNewScenario(String addScenarioJson);
+  Future<bool> addNewScenario(String addScenarioJson);
   Future<dynamic> deleteScenario(int scenarioID);
 }
 
@@ -29,9 +29,23 @@ class ScenarioRepoImp implements ScenarioRepo {
   }
 
   @override
-  Future addNewScenario(String addScenarioJson) {
-    // TODO: implement addNewScenario
-    throw UnimplementedError();
+  Future<bool> addNewScenario(String addScenarioJson) async {
+    String apiAddNewScenario = APIString.apiAddScenario();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.post(apiAddNewScenario, headers: header, body: addScenarioJson);
+
+    bool isCreate = true;
+
+    if(response.statusCode == 200) {
+      return isCreate;
+    } else {
+      isCreate = false;
+      return isCreate;
+    }
   }
 
   @override
