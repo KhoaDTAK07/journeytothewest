@@ -42,6 +42,7 @@ class ToolRepoImp implements ToolRepo {
     print(response.statusCode);
     Tool tool;
 
+    print(response.body);
     if(response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
       tool = Tool.fromJson(map);

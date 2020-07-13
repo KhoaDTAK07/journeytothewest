@@ -196,6 +196,7 @@ class ActorAddViewModel extends Model {
       checkEmail(null);
       _isReady = false;
     }
+
     if(_isReady = true) {
       _isLoading = true;
       notifyListeners();

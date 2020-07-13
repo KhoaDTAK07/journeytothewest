@@ -11,6 +11,7 @@ abstract class ActorRepo {
   Future<ActorList> searchActorListByName (String fullName);
   Future<dynamic> deleteActor(String username);
   Future<bool> addNewActor(String addActorJson);
+  Future<dynamic> updateActor(String updateActorJson);
 }
 
 class ActorRepoImp implements ActorRepo {
@@ -37,6 +38,7 @@ class ActorRepoImp implements ActorRepo {
     };
 
     http.Response response = await http.get(apiGetActorDetail, headers: header);
+    print(response.body);
 
     Actor actor;
     if(response.statusCode == 200) {
@@ -114,6 +116,29 @@ class ActorRepoImp implements ActorRepo {
       return isCreate;
     }
 
+  }
+
+  @override
+  Future updateActor(String updateActorJson) async {
+    String apiUpdateActor = APIString.apiUpdateActor();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.put(apiUpdateActor, headers: header, body: updateActorJson);
+
+    bool isCreate = true;
+
+    print("---------");
+    print(response.statusCode);
+
+    if(response.statusCode == 200) {
+      return isCreate;
+    } else {
+      isCreate = false;
+      return isCreate;
+    }
   }
 
 }
