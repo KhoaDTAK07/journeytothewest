@@ -11,6 +11,7 @@ abstract class ScenarioRepo {
   Future<ScenarioList> searchScenarioListByName(String scenarioName);
   Future<bool> addNewScenario(String addScenarioJson);
   Future<dynamic> deleteScenario(int scenarioID);
+  Future<bool> updateScenario(int scenarioID, String updateJson);
 }
 
 class ScenarioRepoImp implements ScenarioRepo {
@@ -111,6 +112,30 @@ class ScenarioRepoImp implements ScenarioRepo {
     scenarioList = ScenarioList.fromJson(list);
 
     return scenarioList;
+  }
+
+  @override
+  Future<bool> updateScenario(int scenarioID, String updateJson) async {
+    String apiUpdateScenario = APIString.apiUpdateScenario() + scenarioID.toString();
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    http.Response response = await http.put(apiUpdateScenario, headers: header, body: updateJson);
+
+    bool isUpdate = true;
+
+    print("---------");
+    print(response.statusCode);
+
+    if(response.statusCode == 200) {
+      return isUpdate;
+    } else {
+      isUpdate = false;
+      return isUpdate;
+    }
+
   }
 
 }

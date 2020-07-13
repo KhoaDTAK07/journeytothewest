@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:journeytothewest/src/adminview/scenario_add_view.dart';
+import 'package:journeytothewest/src/adminview/scenario_detail_view.dart';
 import 'package:journeytothewest/src/view/drawer_bar_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_add_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/scenario_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -30,13 +32,15 @@ class ScenarioMainPage extends StatelessWidget {
           actions: <Widget>[
             RaisedButton(
               onPressed: () async {
-                final isCreate = await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => AddNewScenarioPage(
-                      model: ScenarioAddViewModel(),
-                    ),
-                  ),
-                ).then((value) => model.getScenarioList());
+                final isCreate = await Navigator.of(context)
+                    .push(
+                      MaterialPageRoute(
+                        builder: (context) => AddNewScenarioPage(
+                          model: ScenarioAddViewModel(),
+                        ),
+                      ),
+                    )
+                    .then((value) => model.getScenarioList());
               },
               color: Colors.blueAccent,
               child: Text(
@@ -63,7 +67,7 @@ class ScenarioMainPage extends StatelessWidget {
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(35.0)))),
+                                  BorderRadius.all(Radius.circular(35.0)))),
                     ),
                   );
                 },
@@ -103,7 +107,8 @@ class ScenarioMainPage extends StatelessWidget {
           secondaryActions: <Widget>[
             IconSlideAction(
               onTap: () {
-                model.deleteScenario(model.scenarioList.scenarioList[index].scenarioID);
+                model.deleteScenario(
+                    model.scenarioList.scenarioList[index].scenarioID);
               },
               caption: 'Delete',
               color: Colors.red,
@@ -115,17 +120,20 @@ class ScenarioMainPage extends StatelessWidget {
     );
   }
 
-  Widget _getListScenario(BuildContext context, int index, ScenarioMainViewModel model) {
+  Widget _getListScenario(
+      BuildContext context, int index, ScenarioMainViewModel model) {
     return Column(
       children: <Widget>[
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             print(model.scenarioList.scenarioList[index].scenarioID);
-//                            Navigator.of(context).push(
-//                              MaterialPageRoute(
-//                                builder: (context) => ActorDetailPage(model: ActorDetailViewModel(model.actorList.actorList[index].username),),
-//                              ),
-//                            );
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ScenarioDetailPage(
+                  model: ScenarioDetailViewModel(model.scenarioList.scenarioList[index].scenarioID),
+                ),
+              ),
+            ).then((value) => model.getScenarioList());
           },
           child: Row(
             children: <Widget>[
@@ -135,20 +143,29 @@ class ScenarioMainPage extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         model.scenarioList.scenarioList[index].scenarioName,
-                        style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: <Widget>[
-                          Image.asset("location.png",height: 20,),
+                          Image.asset(
+                            "location.png",
+                            height: 20,
+                          ),
                           SizedBox(
                             width: 4,
                           ),
                           Text(
                             "Location: ",
-                            style: TextStyle(fontSize: 18, color: Colors.black,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             width: 10,
@@ -162,20 +179,23 @@ class ScenarioMainPage extends StatelessWidget {
                           ),
                           Text(
                             "Num of Scene: ",
-                            style: TextStyle(fontSize: 18, color: Colors.black,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            model.scenarioList.scenarioList[index].numOfScene.toString(),
+                            model.scenarioList.scenarioList[index].numOfScene
+                                .toString(),
                             style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
                         ],
                       ),
                     ],
-                  )
-              ),
+                  )),
             ],
           ),
         ),
@@ -199,7 +219,4 @@ class ScenarioMainPage extends StatelessWidget {
       ],
     );
   }
-
 }
-
-

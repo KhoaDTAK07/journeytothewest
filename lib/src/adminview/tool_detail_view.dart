@@ -70,7 +70,7 @@ class ToolDetailPage extends StatelessWidget {
                                 bool isUpdated = await model.updateTool();
                                 if(isUpdated) {
                                   Fluttertoast.showToast(
-                                    msg: "Update Tool success",
+                                    msg: "Update Actor success",
                                     textColor: Colors.red,
                                     toastLength: Toast.LENGTH_SHORT,
                                     backgroundColor: Colors.white,
@@ -79,7 +79,7 @@ class ToolDetailPage extends StatelessWidget {
                                   Navigator.pop(context);
                                 } else {
                                   Fluttertoast.showToast(
-                                    msg: "Update Tool fail",
+                                    msg: "Update Actor fail",
                                     textColor: Colors.red,
                                     toastLength: Toast.LENGTH_SHORT,
                                     backgroundColor: Colors.white,
@@ -89,7 +89,7 @@ class ToolDetailPage extends StatelessWidget {
                                 }
                               },
                               child: Text(
-                                "Update Tool",
+                                "Update Actor",
                                 style: TextStyle(color: Colors.white, fontSize: 18),
                               ),
                               color: Colors.red,

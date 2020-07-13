@@ -126,7 +126,7 @@ class ActorAddNewPage extends StatelessWidget {
                                       );
                                     } else {
                                       Fluttertoast.showToast(
-                                        msg: "Add new Actor fail",
+                                        msg: "Add new Actor fail. Username already exists",
                                         textColor: Colors.red,
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor: Colors.white,

@@ -128,16 +128,16 @@ class ActorRepoImp implements ActorRepo {
 
     http.Response response = await http.put(apiUpdateActor, headers: header, body: updateActorJson);
 
-    bool isCreate = true;
+    bool isUpdate = true;
 
     print("---------");
     print(response.statusCode);
 
     if(response.statusCode == 200) {
-      return isCreate;
+      return isUpdate;
     } else {
-      isCreate = false;
-      return isCreate;
+      isUpdate = false;
+      return isUpdate;
     }
   }
 

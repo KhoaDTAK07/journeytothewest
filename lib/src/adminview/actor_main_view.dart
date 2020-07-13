@@ -129,7 +129,7 @@ class ActorMainPage extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => ActorDetailPage(model: ActorDetailViewModel(model.actorList.actorList[index].username),),
               ),
-            );
+            ).then((value) => model.getActorList());
           },
           child: Row(
             children: <Widget>[

@@ -16,8 +16,6 @@ class ActorDetailViewModel extends Model{
   ActorRepo _actorRepo = ActorRepoImp();
   UpdateActorModel _updateActorModel;
 
-  var dob;
-
   Actor _actor;
   bool _isLoading = false;
   bool _isReady = true;
