@@ -1,5 +1,5 @@
 class AddActorModel {
-  final String username, password, fullName, sex, image, description, phone, email, dob;
+  final String username, password, fullName, sex, image, description, phone, email, dob, createOnDT;
   final int isAdmin, status;
 
   AddActorModel({
@@ -12,6 +12,7 @@ class AddActorModel {
    this.phone,
    this.email,
    this.dob,
+    this.createOnDT,
    this.isAdmin,
    this.status
   });
@@ -26,6 +27,7 @@ class AddActorModel {
     "Phone": phone,
     "Email": email,
     "DOB": dob,
+    "CreateOnDT": createOnDT,
     "IsAdmin": 0,
     "Status": 1
   };

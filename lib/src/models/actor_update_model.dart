@@ -1,5 +1,5 @@
 class UpdateActorModel {
-  final String username, fullName, sex, image, description, phone, email, dob;
+  final String username, fullName, sex, image, description, phone, email, dob, updateBy, updateOnDT;
   final int isAdmin, status;
 
   UpdateActorModel({
@@ -11,6 +11,8 @@ class UpdateActorModel {
     this.phone,
     this.email,
     this.dob,
+    this.updateBy,
+    this.updateOnDT,
     this.isAdmin,
     this.status
   });
@@ -24,6 +26,8 @@ class UpdateActorModel {
     "Phone": phone,
     "Email": email,
     "DOB": dob,
+    "UpdateBy": updateBy,
+    "updateOnDT": updateOnDT,
     "IsAdmin": 0,
     "Status": 1
   };

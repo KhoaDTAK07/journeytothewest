@@ -11,6 +11,7 @@ import 'package:journeytothewest/src/models/actor_update_model.dart';
 import 'package:journeytothewest/src/repos/actor_repo.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActorDetailViewModel extends Model{
   ActorRepo _actorRepo = ActorRepoImp();
@@ -180,6 +181,9 @@ class ActorDetailViewModel extends Model{
   }
 
   Future<dynamic> updateActor() async {
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String username = sharedPreferences.getString("username");
+
     _isReady = true;
     if(_fullName.value == null) {
       print(_fullName.value);
@@ -228,6 +232,8 @@ class ActorDetailViewModel extends Model{
         email: _email.value,
         image: currentImage,
         dob: _selectedDateOfBirth.toString(),
+        updateBy: username,
+        updateOnDT: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       );
 
       String addActorJson = jsonEncode(_updateActorModel.toJson());

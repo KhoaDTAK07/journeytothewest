@@ -219,6 +219,7 @@ class ActorAddViewModel extends Model {
         email: _email.value,
         image: currentImage,
         dob: _selectedDateOfBirth.toString(),
+        createOnDT: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       );
 
       String addActorJson = jsonEncode(_addActorModel.toJson());

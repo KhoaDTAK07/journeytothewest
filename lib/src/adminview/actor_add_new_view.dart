@@ -111,7 +111,7 @@ class ActorAddNewPage extends StatelessWidget {
                                     bool isCreate = await model.addNewActor();
                                     print("---------");
                                     print(isCreate);
-                                    if(isCreate) {
+                                    if (isCreate) {
                                       Fluttertoast.showToast(
                                         msg: "Add new Actor success",
                                         textColor: Colors.red,
@@ -121,7 +121,9 @@ class ActorAddNewPage extends StatelessWidget {
                                       );
                                       Navigator.of(context).pop(
                                         MaterialPageRoute(
-                                          builder: (context) => ActorMainPage(model: ActorMainViewModel(),),
+                                          builder: (context) =>
+                                              ActorMainPage(
+                                                model: ActorMainViewModel(),),
                                         ),
                                       );
                                     } else {
