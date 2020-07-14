@@ -97,4 +97,21 @@ class APIString {
     String url = "prmapi.azurewebsites.net";
     return url;
   }
+
+
+  //-------------------- API Shopping Cart1 ----------------------------------
+  static String apiGetAllShoppingCart1() {
+    String url = "http://prmapi.azurewebsites.net/api/ActorScenarioDetail/getall";
+    return url;
+  }
+
+  static String apiAddActorToCart() {
+    String url = "http://prmapi.azurewebsites.net/api/ActorScenarioDetail";
+    return url;
+  }
+
+  static String apiDeleteActorFromCart() {
+    String url = "prmapi.azurewebsites.net";
+    return url;
+  }
 }

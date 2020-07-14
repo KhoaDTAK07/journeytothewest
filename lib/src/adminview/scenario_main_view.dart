@@ -39,8 +39,7 @@ class ScenarioMainPage extends StatelessWidget {
                           model: ScenarioAddViewModel(),
                         ),
                       ),
-                    )
-                    .then((value) => model.getScenarioList());
+                    ).then((value) => model.getScenarioList());
               },
               color: Colors.blueAccent,
               child: Text(

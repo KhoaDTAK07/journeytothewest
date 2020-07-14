@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:journeytothewest/src/adminview/shopping_cart1_add_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_detail_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/shopping_cart1_add_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ScenarioDetailPage extends StatelessWidget {
@@ -47,7 +49,7 @@ class ScenarioDetailPage extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
           centerTitle: true,
           title: new Text(
-            "Update Scenario",
+            "Scenario Detail",
             textAlign: TextAlign.center,
           ),
         ),
@@ -198,6 +200,16 @@ class ScenarioDetailPage extends StatelessWidget {
               );
             }
           },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddShoppingCart1Page(model: ShoppingCart1AddViewModel(model.scenarioId),),
+              ),
+            );
+          },
+          child: Icon(Icons.shopping_cart),
         ),
       ),
     );
