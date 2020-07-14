@@ -1,9 +1,9 @@
 class Actor {
-  final String username, fullName, sex, image, description, phone, email;
+  final String username, fullName, sex, image, description, phone, email, updateBy, updateOnDT;
   final DateTime dob;
   final int status;
 
-  Actor({this.username, this.fullName, this.sex, this.email, this.image, this.description, this.phone, this.dob, this.status});
+  Actor({this.username, this.fullName, this.sex, this.email, this.image, this.description, this.phone, this.dob, this.updateBy, this.updateOnDT, this.status});
 
   factory Actor.fromJson(Map<String, dynamic> json) {
     return Actor(
@@ -15,6 +15,8 @@ class Actor {
       phone: json['phone'],
       email: json['email'],
       dob: DateTime.parse(json['dob'].toString()),
+      updateBy: json['updateBy'],
+      updateOnDT: json['updateOnDT'].toString(),
       status: json['status'],
     );
   }

@@ -25,6 +25,9 @@ class ActorDetailViewModel extends Model{
   bool get isLoading => _isLoading;
   bool get isReady => _isReady;
 
+  String _lastUpdateDay;
+  String get lastUpdateDay => _lastUpdateDay;
+
   ActorDetailViewModel(String username) {
     loadActorDetail(username);
   }
@@ -46,6 +49,7 @@ class ActorDetailViewModel extends Model{
       emailField.text = _actor.email;
       _defaultImage = _actor.image;
       _selectedDateOfBirth = _actor.dob;
+      lastUpdateDayField.text = DateFormat('yyyy-MM-dd').format(DateTime.parse(_actor.updateOnDT));
 
       _fullName = Validation(_actor.fullName, null);
       _sex = Validation(_actor.sex, null);
@@ -62,6 +66,7 @@ class ActorDetailViewModel extends Model{
   TextEditingController descriptionField = new TextEditingController();
   TextEditingController phoneField = new TextEditingController();
   TextEditingController emailField = new TextEditingController();
+  TextEditingController lastUpdateDayField = new TextEditingController();
 
   String _defaultImage;
   String get defaultImage => _defaultImage;

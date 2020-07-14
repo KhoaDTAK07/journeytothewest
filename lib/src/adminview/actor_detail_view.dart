@@ -97,6 +97,8 @@ class ActorDetailPage extends StatelessWidget {
 
                             _emailField(),
 
+                            _lastUpdateField(),
+
                             SizedBox(
                               width: double.infinity,
                               height: 80,
@@ -385,6 +387,35 @@ class ActorDetailPage extends StatelessWidget {
             ),
           ),
         )
+      ],
+    );
+  }
+
+  Widget _lastUpdateField() {
+    return Column(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+          child: Text(
+            "Last Update Date: ",
+            style: TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          height: 70,
+          padding: const EdgeInsets.fromLTRB(30, 15, 30, 0),
+          child: TextField(
+            controller: model.lastUpdateDayField,
+            readOnly: true,
+            decoration: new InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+                border: new OutlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.teal)),
+            ),
+          ),
+        ),
       ],
     );
   }
