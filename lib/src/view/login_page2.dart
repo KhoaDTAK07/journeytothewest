@@ -72,10 +72,8 @@ class LoginPage2 extends StatelessWidget {
     Map<String, dynamic> map = await model.checkLogin();
     print(map.values);
     if(map['isAdmin'] == 1) {
-      Navigator.push(context,
-        MaterialPageRoute(builder: (context) => HomePageAdmin(),
-        ),
-      );
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (BuildContext context) => HomePageAdmin()));
     } else if(map['isAdmin'] == 0) {
 
     } else if(map['StatusCode'] == 415) {
