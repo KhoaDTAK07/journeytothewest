@@ -5,13 +5,13 @@ import 'package:journeytothewest/src/helper/api_string.dart';
 import 'package:http/http.dart' as http;
 import 'package:journeytothewest/src/models/shopping_cart1_model.dart';
 
-abstract class ShoppingCartRepo {
-  Future<ShoppingCart1List> getAll();
+abstract class ShoppingCart1Repo {
+  Future<ShoppingCart1List> getAll(int scenarioID);
   Future<bool> addActorToScenario(String addJson);
   Future<dynamic> deleteActorFromScenario(int AsdID);
 }
 
-class ShoppingCartRepoImp implements ShoppingCartRepo {
+class ShoppingCartRepoImp implements ShoppingCart1Repo {
 
   @override
   Future<bool> addActorToScenario(String addJson) async {
@@ -36,14 +36,19 @@ class ShoppingCartRepoImp implements ShoppingCartRepo {
   }
 
   @override
-  Future<ShoppingCart1List> getAll() async {
-    String apiGetAll = APIString.apiGetAllShoppingCart1();
+  Future<ShoppingCart1List> getAll(int scenarioID) async {
+    String apiGetAll = APIString.apiGetAllShoppingCart1ByScenarioID();
 
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    http.Response response = await http.get(apiGetAll, headers: header);
+    Map<String, String> param = {
+      'scenarioID': scenarioID.toString(),
+    };
+
+    var uri = Uri.http(apiGetAll, "api/ActorScenarioDetail/getall", param);
+    http.Response response = await http.get(uri, headers: header);
 
     List<dynamic> list = jsonDecode(response.body);
 

@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:journeytothewest/src/adminview/actor_in_scenario_view.dart';
 import 'package:journeytothewest/src/adminview/shopping_cart1_add_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/shopping_cart1_add_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/shopping_cart1_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ScenarioDetailPage extends StatelessWidget {
@@ -193,6 +196,80 @@ class ScenarioDetailPage extends StatelessWidget {
                             ),
                           ),
                         ),
+
+                        SizedBox(
+                          width: double.infinity,
+                          height: 80,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                30, 30, 30, 0),
+                            child: RaisedButton(
+                              onPressed: () async {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ActorInScenarioPage(model: ShoppingCart1MainViewModel(model.scenarioId),),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "View Actor in Scenario",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                              color: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(6)),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: double.infinity,
+                          height: 80,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                30, 30, 30, 0),
+                            child: RaisedButton(
+                              onPressed: () async {
+//                                bool isUpdated = await model.updateScenario();
+//                                if(isUpdated) {
+//                                  Fluttertoast.showToast(
+//                                    msg: "Update Scenario success",
+//                                    textColor: Colors.red,
+//                                    toastLength: Toast.LENGTH_SHORT,
+//                                    backgroundColor: Colors.white,
+//                                    gravity: ToastGravity.CENTER,
+//                                  );
+//                                  Navigator.pop(context);
+//                                } else {
+//                                  Fluttertoast.showToast(
+//                                    msg: "Update Scenario fail",
+//                                    textColor: Colors.red,
+//                                    toastLength: Toast.LENGTH_SHORT,
+//                                    backgroundColor: Colors.white,
+//                                    gravity: ToastGravity.CENTER,
+//                                  );
+//                                  Navigator.of(context).pop();
+//                                }
+                              },
+                              child: Text(
+                                "View Tool in Scenario",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                              color: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(6)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
                       ],
                     ),
                   ),
@@ -200,16 +277,6 @@ class ScenarioDetailPage extends StatelessWidget {
               );
             }
           },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AddShoppingCart1Page(model: ShoppingCart1AddViewModel(model.scenarioId),),
-              ),
-            );
-          },
-          child: Icon(Icons.shopping_cart),
         ),
       ),
     );

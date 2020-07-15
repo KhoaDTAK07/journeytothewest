@@ -100,8 +100,8 @@ class APIString {
 
 
   //-------------------- API Shopping Cart1 ----------------------------------
-  static String apiGetAllShoppingCart1() {
-    String url = "http://prmapi.azurewebsites.net/api/ActorScenarioDetail/getall";
+  static String apiGetAllShoppingCart1ByScenarioID() {
+    String url = "prmapi.azurewebsites.net";
     return url;
   }
 

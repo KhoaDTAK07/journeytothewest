@@ -12,7 +12,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShoppingCart1AddViewModel extends Model {
-  ShoppingCartRepo _shoppingCartRepo = ShoppingCartRepoImp();
+  ShoppingCart1Repo _shoppingCartRepo = ShoppingCartRepoImp();
   ActorRepo _actorRepo = ActorRepoImp();
   ScenarioRepo _scenarioRepo = ScenarioRepoImp();
   AddShoppingCart1Model _addShoppingCart1Model;
