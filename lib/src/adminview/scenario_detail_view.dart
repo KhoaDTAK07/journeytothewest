@@ -4,10 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:journeytothewest/src/adminview/actor_in_scenario_view.dart';
 import 'package:journeytothewest/src/adminview/shopping_cart1_add_view.dart';
+import 'package:journeytothewest/src/adminview/tool_in_scenario_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/shopping_cart1_add_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/shopping_cart1_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/shopping_cart2_main_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -207,7 +209,8 @@ class ScenarioDetailPage extends StatelessWidget {
                               onPressed: () async {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => ActorInScenarioPage(model: ShoppingCart1MainViewModel(model.scenarioId),),
+                                    builder: (context) => ActorInScenarioPage(model: ShoppingCart1MainViewModel(model.scenarioId),
+                                                                              scenarioID: model.scenarioId,),
                                   ),
                                 );
                               },
@@ -233,26 +236,12 @@ class ScenarioDetailPage extends StatelessWidget {
                                 30, 30, 30, 0),
                             child: RaisedButton(
                               onPressed: () async {
-//                                bool isUpdated = await model.updateScenario();
-//                                if(isUpdated) {
-//                                  Fluttertoast.showToast(
-//                                    msg: "Update Scenario success",
-//                                    textColor: Colors.red,
-//                                    toastLength: Toast.LENGTH_SHORT,
-//                                    backgroundColor: Colors.white,
-//                                    gravity: ToastGravity.CENTER,
-//                                  );
-//                                  Navigator.pop(context);
-//                                } else {
-//                                  Fluttertoast.showToast(
-//                                    msg: "Update Scenario fail",
-//                                    textColor: Colors.red,
-//                                    toastLength: Toast.LENGTH_SHORT,
-//                                    backgroundColor: Colors.white,
-//                                    gravity: ToastGravity.CENTER,
-//                                  );
-//                                  Navigator.of(context).pop();
-//                                }
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ToolInScenarioPage(model: ShoppingCart2MainViewModel(model.scenarioId),
+                                                                              scenarioID: model.scenarioId,),
+                                  ),
+                                );
                               },
                               child: Text(
                                 "View Tool in Scenario",

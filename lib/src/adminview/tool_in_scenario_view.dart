@@ -1,33 +1,34 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:journeytothewest/src/adminview/shopping_cart1_add_view.dart';
+import 'package:journeytothewest/src/adminview/shopping_cart2_add_view.dart';
 import 'package:journeytothewest/src/view/loading_state.dart';
-import 'package:journeytothewest/src/viewmodel/shopping_cart1_add_viewmodel.dart';
-import 'package:journeytothewest/src/viewmodel/shopping_cart1_main_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/shopping_cart2_add_viewmodel.dart';
+import 'package:journeytothewest/src/viewmodel/shopping_cart2_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class ActorInScenarioPage extends StatelessWidget {
-  final ShoppingCart1MainViewModel model;
+class ToolInScenarioPage extends StatelessWidget {
+  final ShoppingCart2MainViewModel model;
   final int scenarioID;
 
-  ActorInScenarioPage({this.model, this.scenarioID});
+  ToolInScenarioPage({this.model, this.scenarioID});
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<ShoppingCart1MainViewModel>(
+    return ScopedModel<ShoppingCart2MainViewModel>(
       model: model,
       child: Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.blueAccent,
           centerTitle: true,
           title: new Text(
-            "List Actor in Scenario",
+            "List Tool in Scenario",
             textAlign: TextAlign.center,
           ),
         ),
         body: Column(
           children: <Widget>[
-            ScopedModelDescendant<ShoppingCart1MainViewModel>(
+            ScopedModelDescendant<ShoppingCart2MainViewModel>(
               builder: (context, child, model) {
                 if (model.isLoading) {
                   return LoadingState();
@@ -47,9 +48,9 @@ class ActorInScenarioPage extends StatelessWidget {
           onPressed: () async {
             await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => AddShoppingCart1Page(model: ShoppingCart1AddViewModel(scenarioID),),
+                builder: (context) => AddShoppingCart2Page(model: ShoppingCart2AddViewModel(scenarioID),),
               ),
-            ).then((value) => model.getActorInScenario(scenarioID));;
+            ).then((value) => model.getToolInScenario(scenarioID));;
           },
           child: Icon(Icons.shopping_cart),
         ),
@@ -57,10 +58,10 @@ class ActorInScenarioPage extends StatelessWidget {
     );
   }
 
-  Widget _drawSlidable(BuildContext context, ShoppingCart1MainViewModel model) {
+  Widget _drawSlidable(BuildContext context, ShoppingCart2MainViewModel model) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
-      itemCount: model.shoppingCart1List.list.length,
+      itemCount: model.shoppingCart2List.list.length,
       itemBuilder: (context, index) {
         return Slidable(
           actionPane: SlidableStrechActionPane(),
@@ -72,7 +73,7 @@ class ActorInScenarioPage extends StatelessWidget {
   }
 
   Widget _getListScenario(
-      BuildContext context, int index, ShoppingCart1MainViewModel model) {
+      BuildContext context, int index, ShoppingCart2MainViewModel model) {
     return Column(
       children: <Widget>[
         Container(
@@ -80,7 +81,7 @@ class ActorInScenarioPage extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                model.shoppingCart1List.list[index].scenarioName,
+                model.shoppingCart2List.list[index].scenarioName,
                 style: TextStyle(
                     fontSize: 22,
                     color: Colors.black,
@@ -94,7 +95,7 @@ class ActorInScenarioPage extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                "Actor: ",
+                "Tool: ",
                 style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -104,7 +105,7 @@ class ActorInScenarioPage extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                model.shoppingCart1List.list[index].fullName,
+                model.shoppingCart2List.list[index].toolName,
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
             ],
@@ -115,7 +116,7 @@ class ActorInScenarioPage extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                "Character Name: ",
+                "Amount: ",
                 style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -125,7 +126,7 @@ class ActorInScenarioPage extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                model.shoppingCart1List.list[index].characterName,
+                model.shoppingCart2List.list[index].amount.toString(),
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
             ],

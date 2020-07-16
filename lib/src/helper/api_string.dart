@@ -114,4 +114,16 @@ class APIString {
     String url = "prmapi.azurewebsites.net";
     return url;
   }
+
+  //-------------------- API Shopping Cart2 ----------------------------------
+  static String apiGetAllShoppingCart2ByScenarioID() {
+    String url = "prmapi.azurewebsites.net";
+    return url;
+  }
+
+  static String apiAddToolToScenario() {
+    String url = "http://prmapi.azurewebsites.net/api/ToolScenarioDetail";
+    return url;
+  }
+
 }

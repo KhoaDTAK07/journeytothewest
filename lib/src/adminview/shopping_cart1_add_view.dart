@@ -90,11 +90,6 @@ class AddShoppingCart1Page extends StatelessWidget {
                                     gravity: ToastGravity.CENTER,
                                   );
                                   Navigator.of(context).pop();
-//                                  Navigator.of(context).pop(
-//                                    MaterialPageRoute(
-//                                      builder: (context) => ScenarioMainPage(model: ScenarioMainViewModel(),),
-//                                    ),
-//                                  );
                                 } else {
                                   Fluttertoast.showToast(
                                     msg: "Add Actor to Scenario fail",
