@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:journeytothewest/src/adminview/home_page_admin.dart';
+import 'package:journeytothewest/src/userview/home_page_user.dart';
 import 'package:journeytothewest/src/viewmodel/login_page_viewmodel2.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -75,7 +76,8 @@ class LoginPage2 extends StatelessWidget {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (BuildContext context) => HomePageAdmin()));
     } else if(map['isAdmin'] == 0) {
-
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (BuildContext context) => UserHomePage()));
     } else if(map['StatusCode'] == 415) {
       print("-----------");
       print(username.text);

@@ -12,8 +12,6 @@ import 'package:journeytothewest/src/viewmodel/actor_main_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/drawer_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'not_found_page.dart';
-
 class ActorMainPage extends StatelessWidget {
   final ActorMainViewModel model;
 
@@ -76,8 +74,6 @@ class ActorMainPage extends StatelessWidget {
                 builder: (context, child, model) {
                   if (model.isLoading) {
                     return LoadingState();
-                  } else if (model.isLoading && model.isHave) {
-                    return NotFoundState();
                   } else {
                     return Expanded(
                       child: Padding(

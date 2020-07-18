@@ -11,8 +11,6 @@ import 'package:journeytothewest/src/viewmodel/tool_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/tool_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'not_found_page.dart';
-
 class ToolMainPage extends StatelessWidget {
   final ToolMainViewModel model;
 
@@ -82,8 +80,6 @@ class ToolMainPage extends StatelessWidget {
                 builder: (context, child, model) {
                   if (model.isLoading) {
                     return LoadingState();
-                  } else if (model.isLoading && model.isHave) {
-                    return NotFoundState();
                   } else {
                     return Expanded(
                       child: Padding(

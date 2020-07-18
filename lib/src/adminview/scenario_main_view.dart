@@ -10,8 +10,6 @@ import 'package:journeytothewest/src/viewmodel/scenario_detail_viewmodel.dart';
 import 'package:journeytothewest/src/viewmodel/scenario_main_viewmodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'not_found_page.dart';
-
 class ScenarioMainPage extends StatelessWidget {
   final ScenarioMainViewModel model;
 
@@ -75,8 +73,6 @@ class ScenarioMainPage extends StatelessWidget {
                 builder: (context, child, model) {
                   if (model.isLoading) {
                     return LoadingState();
-                  } else if (model.isLoading && model.isHave) {
-                    return NotFoundState();
                   } else {
                     return Expanded(
                       child: Padding(

@@ -126,4 +126,9 @@ class APIString {
     return url;
   }
 
+  //-------------------- API User ----------------------------------
+  static String apiGetScheduleByUsername() {
+    String url = "prmapi.azurewebsites.net";
+    return url;
+  }
 }
