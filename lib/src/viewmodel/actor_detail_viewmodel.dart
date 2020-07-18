@@ -49,7 +49,6 @@ class ActorDetailViewModel extends Model{
       emailField.text = _actor.email;
       _defaultImage = _actor.image;
       _selectedDateOfBirth = _actor.dob;
-      lastUpdateDayField.text = DateFormat('yyyy-MM-dd').format(DateTime.parse(_actor.updateOnDT));
 
       _fullName = Validation(_actor.fullName, null);
       _sex = Validation(_actor.sex, null);

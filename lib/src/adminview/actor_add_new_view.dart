@@ -41,7 +41,7 @@ class ActorAddNewPage extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
           centerTitle: true,
           title: new Text(
-            "Add new Tool",
+            "Add new Actor",
             textAlign: TextAlign.center,
           ),
         ),

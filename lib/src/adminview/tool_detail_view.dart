@@ -89,7 +89,7 @@ class ToolDetailPage extends StatelessWidget {
                                 }
                               },
                               child: Text(
-                                "Update Actor",
+                                "Update Tool",
                                 style: TextStyle(color: Colors.white, fontSize: 18),
                               ),
                               color: Colors.red,

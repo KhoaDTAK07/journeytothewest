@@ -182,7 +182,7 @@ class AddNewScenarioPage extends StatelessWidget {
                                 }
                               },
                               child: Text(
-                                "Add new Tool",
+                                "Add new Scenario",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18),
                               ),
